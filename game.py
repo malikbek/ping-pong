@@ -1,6 +1,13 @@
 import pygame
 import sys
 
+#звук в игре
+pygame.mixer.init()
+pygame.mixer.music.load("soundu.mp3")
+pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.play()
+
+
 # Инициализация Pygame
 pygame.init()
 
@@ -92,10 +99,11 @@ while True:
     keys = pygame.key.get_pressed()
 
     # Управление первой ракеткой
-    if keys[pygame.K_w] and player1.top > 0:
-        player1.y -= player_speed
-    if keys[pygame.K_s] and player1.bottom < screen_height:
-        player1.y += player_speed
+    if game_mode == 0 or game_mode == 1:
+        if keys[pygame.K_w] and player1.top > 0:
+            player1.y -= player_speed
+        if keys[pygame.K_s] and player1.bottom < screen_height:
+            player1.y += player_speed
 
     # Управление второй ракеткой
     if game_mode == 0 or game_mode == 1:
@@ -128,6 +136,8 @@ while True:
         ball.y = screen_height // 2 - 10
         if score_player2 == max_score:
             print("Игрок 2 выиграл!")
+            pygame.mixer.music.load("lose.mp3")
+            pygame.mixer.music.play()
             game_active = False
     elif ball.right >= screen_width:
         score_player1 += 1
@@ -135,6 +145,8 @@ while True:
         ball.y = screen_height // 2 - 10
         if score_player1 == max_score:
             print("Игрок 1 выиграл!")
+            pygame.mixer.music.load("lose.mp3")
+            pygame.mixer.music.play()
             game_active = False
 
     # Очистка экрана
