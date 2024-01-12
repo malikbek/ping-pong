@@ -43,7 +43,7 @@ score_player1 = 0
 score_player2 = 0
 
 # Максимальное количество очков для завершения игры
-max_score = 10
+max_score = 15
 
 # Состояние игры
 game_active = False
@@ -52,7 +52,7 @@ game_mode = None  # 0 - Играть, 1 - Игра на двоих, 2 - Игра
 font = pygame.font.Font(None, 36)
 
 def draw_menu():
-    menu_text = ["1. Играть", "2. Игра на двоих", "3. Игра с ботом", "4. Выйти"]
+    menu_text = ["2. Игра на двоих", "3. Игра с ботом", "4. Выйти"]
     y = screen_height // 2 - len(menu_text) * 20
     for text in menu_text:
         text_surface = font.render(text, True, white)
@@ -111,11 +111,25 @@ while True:
             player2.y -= player_speed
         if keys[pygame.K_DOWN] and player2.bottom < screen_height:
             player2.y += player_speed
-    elif game_mode == 2:  # Игра с ботом
+    elif game_mode == 2:  
+    # Игра с ботом
+        if game_mode == 2:
+            if keys[pygame.K_w] and player1.top > 0:
+                player1.y -= player_speed
+            if keys[pygame.K_s] and player1.bottom < screen_height:
+                player1.y += player_speed
+
         if ball.centery < player2.centery and player2.top > 0:
             player2.y -= bot_speed
         elif ball.centery > player2.centery and player2.bottom < screen_height:
             player2.y += bot_speed
+        if game_mode == 0 or game_mode == 1:
+            if game_mode == 3:
+                if keys[pygame.K_w] and player1.top > 0:
+                    player1.y -= player_speed
+                if keys[pygame.K_s] and player1.bottom < screen_height:
+                    player1.y += player_speed
+
 
     # Движение мяча
     ball.x += ball_speed_x
@@ -128,6 +142,8 @@ while True:
     # Обработка столкновений с ракетками
     if ball.colliderect(player1) or ball.colliderect(player2):
         ball_speed_x = -ball_speed_x
+
+
 
     # Проверка завершения игры
     if ball.left <= 0:
