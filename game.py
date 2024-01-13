@@ -1,6 +1,7 @@
 import pygame
 import sys
 
+
 #звук в игре
 pygame.mixer.init()
 pygame.mixer.music.load("soundu.mp3")
@@ -11,39 +12,49 @@ pygame.mixer.music.play()
 # Инициализация Pygame
 pygame.init()
 
+
 # Размеры экрана
 screen_width = 600
 screen_height = 400
+
 
 # Цвета
 black = (0, 0, 0)
 white = (255, 255, 255)
 
+
 # Инициализация экрана
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Пинг-Понг")
+
 
 # Инициализация ракеток и мяча
 player1 = pygame.Rect(50, screen_height // 2 - 30, 10, 60)
 player2 = pygame.Rect(screen_width - 60, screen_height // 2 - 30, 10, 60)
 ball = pygame.Rect(screen_width // 2 - 10, screen_height // 2 - 10, 20, 20)
 
+
 # Скорость мяча
 ball_speed_x = 5
 ball_speed_y = 5
 
+
 # Скорость ракеток
 player_speed = 10
 
+
 # Инициализация бота
 bot_speed = 6
+
 
 # Счетчик очков
 score_player1 = 0
 score_player2 = 0
 
+
 # Максимальное количество очков для завершения игры
-max_score = 15
+max_score = 10
+
 
 # Состояние игры
 game_active = False
@@ -98,12 +109,14 @@ while True:
 
     keys = pygame.key.get_pressed()
 
+
     # Управление первой ракеткой
     if game_mode == 0 or game_mode == 1:
         if keys[pygame.K_w] and player1.top > 0:
             player1.y -= player_speed
         if keys[pygame.K_s] and player1.bottom < screen_height:
             player1.y += player_speed
+
 
     # Управление второй ракеткой
     if game_mode == 0 or game_mode == 1:
@@ -112,6 +125,7 @@ while True:
         if keys[pygame.K_DOWN] and player2.bottom < screen_height:
             player2.y += player_speed
     elif game_mode == 2:  
+
     # Игра с ботом
         if game_mode == 2:
             if keys[pygame.K_w] and player1.top > 0:
@@ -130,7 +144,6 @@ while True:
                 if keys[pygame.K_s] and player1.bottom < screen_height:
                     player1.y += player_speed
 
-
     # Движение мяча
     ball.x += ball_speed_x
     ball.y += ball_speed_y
@@ -142,8 +155,8 @@ while True:
     # Обработка столкновений с ракетками
     if ball.colliderect(player1) or ball.colliderect(player2):
         ball_speed_x = -ball_speed_x
-
-
+        hit = pygame.mixer.ss('hit.mp3')
+        hit.play()
 
     # Проверка завершения игры
     if ball.left <= 0:
