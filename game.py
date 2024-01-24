@@ -5,7 +5,7 @@ import sys
 #звук в игре
 pygame.mixer.init()
 pygame.mixer.music.load("soundu.mp3")
-pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.set_volume(0.8)
 pygame.mixer.music.play()
 
 
@@ -155,7 +155,7 @@ while True:
     # Обработка столкновений с ракетками
     if ball.colliderect(player1) or ball.colliderect(player2):
         ball_speed_x = -ball_speed_x
-        hit = pygame.mixer.ss('hit.mp3')
+        hit = pygame.mixer.Sound('hit.mp3')
         hit.play()
 
     # Проверка завершения игры
